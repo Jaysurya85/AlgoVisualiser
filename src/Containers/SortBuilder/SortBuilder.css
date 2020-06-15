@@ -1,0 +1,16 @@
+.bar{
+    /* width: 4px; */
+    /* background-color: aqua ; */
+    display: inline-block;
+    margin: 0 0.5px;
+    border-top: 0.1px solid;
+}
+.container{
+    /* background-color: rgb(21, 59, 11); */
+    position: relative;
+    top: 30px;
+    display: flex;
+    justify-content: center;
+    display: flex;
+    z-index: -1;
+}

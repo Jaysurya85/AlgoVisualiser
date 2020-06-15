@@ -1,0 +1,19 @@
+.AnimationSpeed{
+    z-index: 100;
+    height: 30px;
+    width: 200px ;
+    border: 2px solid rgb(23, 126, 74);
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.AnimationSpeed:disabled{
+    z-index: 100;
+    height: 30px;
+    width: 200px ;
+    border: 2px black;
+    cursor: not-allowed;
+    color: gray;
+    border-radius: 10px;
+    font-weight: bold;
+}
