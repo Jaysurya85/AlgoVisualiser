@@ -27,7 +27,7 @@ const QuickSortAnimation = (array,animationSpeed,primarycolor,secondarycolor) =>
           }
           const barStyle = Bars[barIndex].style;
           setTimeout(() => {
-              barStyle.height = `${newHeight}px`;
+              barStyle.height = `${newHeight}%`;
           },i * animationSpeed);  
       }
   }

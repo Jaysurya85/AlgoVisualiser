@@ -20,7 +20,7 @@ const MergeSortAnimation = (array,animationSpeed,primarycolor,secondarycolor) =>
             const [barIdx, newHeight] = animations[i];
             setTimeout(() => {
               const barStyle = bars[barIdx].style;
-              barStyle.height = `${newHeight}px`;
+              barStyle.height = `${newHeight}%`;
             }, i*animationSpeed);
           }
         }

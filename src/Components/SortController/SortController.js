@@ -6,20 +6,21 @@ const SortController = (props)=>{
         return(<div className = "nav">
                     <button className = "reset" onClick = {props.clicked} disabled={props.disableButtons}>Reset Array</button>
                     <div className='nav-components'>
-                    <p style={{color:"white"}}>AnimationSpeed</p>
+                    <p className="bar-name">AnimationSpeed</p>
                     <AnimationSpeed 
                     disabled = {props.disableButtons}
                     changed={props.changed} 
                     initual={props.initual} />
                     </div>
                     <div className='nav-components'>
-                    <p style={{color:"white"}}>No Of Bars</p>
+                    <p className="bar-name">No Of Bars</p>
                     <input 
                     className= "Input"
                     id="changeSize"
                     type="range"
                     min="20"
-                    max="200"
+                    max="150"
+                    value={props.value}
                     onChange={props.sliderchange}
                     disabled={props.disableButtons}
                     />

@@ -34,7 +34,7 @@ const SelectionSortAnimation = (array,animationSpeed,primarycolor,secondarycolor
         const newHeight = animations[i][2];
             setTimeout(() => {
               const barStyle = bars[barIdx].style;
-              barStyle.height = `${newHeight}px`;
+              barStyle.height = `${newHeight}%`;
             }, i*animationSpeed);
       }
     }

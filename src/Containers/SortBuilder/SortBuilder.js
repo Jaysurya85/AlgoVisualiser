@@ -1,134 +1,125 @@
-import React,{Component} from 'react';
-import './SortBuilder.css'
-import ResetRandomArray from '../../Components/SortVisualization/ResetArray'
+import React,{useEffect, useState} from 'react';
+import './SortBuilder.css';
+import ResetRandomArray from '../../Components/SortVisualization/ResetArray';
 import SortController from '../../Components/SortController/SortController';
-import BubbleSortAnimation from '../../Components/SortVisualization/BubleSortAnimation'
-import SelectionSortAnimation from '../../Components/SortVisualization/SelectionSortAnimation'
-import InsertionSortAnimation from '../../Components/SortVisualization/SelectionSortAnimation'
-import MergesortAnimation from '../../Components/SortVisualization/MergeSortAnimations'
-import QuickSortAnimation from '../../Components/SortVisualization/QuickSortAnimation'
+import BubbleSortAnimation from '../../Components/SortVisualization/BubleSortAnimation';
+import SelectionSortAnimation from '../../Components/SortVisualization/SelectionSortAnimation';
+import InsertionSortAnimation from '../../Components/SortVisualization/SelectionSortAnimation';
+import MergesortAnimation from '../../Components/SortVisualization/MergeSortAnimations';
+import QuickSortAnimation from '../../Components/SortVisualization/QuickSortAnimation';
 import EndAnimation from   '../../Components/SortVisualization/endAnimations';
 
 
-class SortBuilder extends Component{
+const SortBuilder=()=>{
 
-state = {
-    array:[],
-    animationSpeed:0.25,
-    value:100,
-    disabledButtons:false
-}
-totalWidth = window.innerWidth;
-totalHeight = window.innerHeight;
-// noOfBars = parseInt((this.totalWidth-600)/4);
-// animationSpeed = 0.1
-primarycolor = "aqua"
-secondarycolor= "red"
+    let [array,setArray] = useState([]);
+    let [animationSpeed,setAnimationSpeed] = useState(0.25);
+    let [value,setValue] = useState(75);
+    let [disabledButtons,setDisableButtons]  = useState(false);
+    let totalWidth = 80;
+    let totalHeight = 80;
+    let primarycolor = "hsl(267, 54%, 41%)";
+    let secondarycolor= "hsl(100, 50%, 75%)";
 
-componentDidMount(){
-    this.ResetArray();
-}
+    useEffect(()=>{
+        // return ResetArray();
+        ResetArray();
+    },[value]);
 
-ResetArray = ()=>{
-    const RandArray = ResetRandomArray(this.totalHeight,this.state.value)
-    this.setState({array:RandArray})
-}
-BubbleSort = () => {
-    Promise.resolve(this.setState({disabledButtons:true})).then(()=>{
-        const [sortedArray,animationsLength] = BubbleSortAnimation(this.state.array,this.state.animationSpeed,this.primarycolor,this.secondarycolor);
-        EndAnimation(sortedArray,animationsLength,this.state.animationSpeed,this.primarycolor)
-        const time = (animationsLength*this.state.animationSpeed) + (sortedArray.length*2*10)
-        setTimeout(()=>{
-            this.setState({disabledButtons:false})
-        },time)
-    })
-}
-SelectionSort = () =>{
-    Promise.resolve(this.setState({disabledButtons:true})).then(()=>{
-        const [sortedArray,animationsLength] = SelectionSortAnimation(this.state.array,this.state.animationSpeed,this.primarycolor,this.secondarycolor);
-        EndAnimation(sortedArray,animationsLength,this.state.animationSpeed,this.primarycolor)
-        const time = (animationsLength*this.state.animationSpeed) + (sortedArray.length*2*10)
-        setTimeout(()=>{
-            this.setState({disabledButtons:false})
-        },time)
-    })
-    
-    
-}
+    const ResetArray = ()=>{
 
-InsertionSort = () =>{
-    Promise.resolve(this.setState({disabledButtons:true})).then(()=>{
-        const [sortedArray,animationsLength] = InsertionSortAnimation(this.state.array,this.state.animationSpeed,this.primarycolor,this.secondarycolor);
-        EndAnimation(sortedArray,animationsLength,this.state.animationSpeed,this.primarycolor)
-        const time = (animationsLength*this.state.animationSpeed) + (sortedArray.length*2*10)
-        setTimeout(()=>{
-            this.setState({disabledButtons:false})
-        },time)
-    })
-}
+        const RandArray = ResetRandomArray(totalHeight,value);
+        setArray(RandArray);
+    }
+    const BubbleSort = () => {
+        Promise.resolve(setDisableButtons(true)).then(()=>{
+            const [sortedArray,animationsLength] = BubbleSortAnimation(array,animationSpeed,primarycolor,secondarycolor);
+            EndAnimation(sortedArray,animationsLength,animationSpeed,primarycolor);
+            const time = (animationsLength*animationSpeed) + (sortedArray.length*2*10);
+            setTimeout(()=>{
+                setDisableButtons(false);
+            },time)
+        })
+    }
+    const SelectionSort = () =>{
+        Promise.resolve(setDisableButtons(true)).then(()=>{
+            const [sortedArray,animationsLength] = SelectionSortAnimation(array,animationSpeed,primarycolor,secondarycolor);
+            EndAnimation(sortedArray,animationsLength,animationSpeed,primarycolor);
+            const time = (animationsLength*animationSpeed) + (sortedArray.length*2*10);
+            setTimeout(()=>{
+                setDisableButtons(false);
+            },time);
+        })
+    }
 
-MegreSort = ()=>{
-    Promise.resolve(this.setState({disabledButtons:true})).then(()=>{
-        const [sortedArray,animationsLength] = MergesortAnimation(this.state.array,this.state.animationSpeed,this.primarycolor,this.secondarycolor);
-        EndAnimation(sortedArray,animationsLength,this.state.animationSpeed,this.primarycolor)
-        const time = (animationsLength*this.state.animationSpeed) + (sortedArray.length*2*10)
-        setTimeout(()=>{
-            this.setState({disabledButtons:false})
-        },time)
-    })
-}
+    const InsertionSort = () =>{
+        Promise.resolve(setDisableButtons(true)).then(()=>{
+            const [sortedArray,animationsLength] = InsertionSortAnimation(array,animationSpeed,primarycolor,secondarycolor);
+            EndAnimation(sortedArray,animationsLength,animationSpeed,primarycolor);
+            const time = (animationsLength*animationSpeed) + (sortedArray.length*2*10);
+            setTimeout(()=>{
+                setDisableButtons(false);
+            },time);
+        })
+    }
 
-QuickSort = () =>{
-    Promise.resolve(this.setState({disabledButtons:true})).then(()=>{
-        const [sortedArray,animationsLength] = QuickSortAnimation(this.state.array,this.state.animationSpeed,this.primarycolor,this.secondarycolor);
-        EndAnimation(sortedArray,animationsLength,this.state.animationSpeed,this.primarycolor)
-        const time = (animationsLength*this.state.animationSpeed) + (sortedArray.length*2*10)
-        setTimeout(()=>{
-            this.setState({disabledButtons:false})
-        },time)
-    })
-}
+    const MegreSort = ()=>{
+        Promise.resolve(setDisableButtons(true)).then(()=>{
+            const [sortedArray,animationsLength] = MergesortAnimation(array,animationSpeed,primarycolor,secondarycolor);
+            EndAnimation(sortedArray,animationsLength,animationSpeed,primarycolor);
+            const time = (animationsLength*animationSpeed) + (sortedArray.length*2*10);
+            setTimeout(()=>{
+                setDisableButtons(false);
+            },time);
+        })
+    }
 
-changedHandler = (event) =>{
-    const newspeed = event.target.value
-    this.setState({animationSpeed:newspeed})
-}
-sliderchangeHandler = (event) =>{
-    const newvalue = event.target.value
-    Promise.resolve(this.setState({value:newvalue})).then(()=>this.ResetArray())
+    const QuickSort = () =>{
+        Promise.resolve(setDisableButtons(true)).then(()=>{
+            const [sortedArray,animationsLength] = QuickSortAnimation(array,animationSpeed,primarycolor,secondarycolor);
+            EndAnimation(sortedArray,animationsLength,animationSpeed,primarycolor);
+            const time = (animationsLength*animationSpeed) + (sortedArray.length*2*10);
+            setTimeout(()=>{
+                setDisableButtons(false);
+            },time);
+        })
+    }
 
-}
-render(){
-    const array = this.state.array;
+    const changedHandler = (event) =>{
+        const newspeed = event.target.value;
+        setAnimationSpeed(newspeed);
+    }
+    const sliderchangeHandler = (event) =>{
+        const newvalue = event.target.value;
+        setValue(newvalue);
+    }
+    // const array = array;
     return(
-        <div>
+        <div className="main-container">
             <SortController 
-            min = {this.state.min}
-            max={this.state.max}
-            value={this.state.value}
-            sliderchange={this.sliderchangeHandler}
-            changed = {this.changedHandler}
-            clicked = {this.ResetArray}
-            initual = {this.state.animationSpeed} 
-            disableButtons = {this.state.disabledButtons}           
-            BubbleSortclicked = {this.BubbleSort}
-            SelectionSortclicked = {this.SelectionSort}
-            InsertonSortclicked = {this.InsertionSort}
-            MergeSortclicked = {this.MegreSort}
-            QuickSortclicked = {this.QuickSort}
+            value={value}
+            sliderchange={sliderchangeHandler}
+            changed = {changedHandler}
+            clicked = {ResetArray}
+            initual = {animationSpeed} 
+            disableButtons = {disabledButtons}           
+            BubbleSortclicked = {BubbleSort}
+            SelectionSortclicked = {SelectionSort}
+            InsertonSortclicked = {InsertionSort}
+            MergeSortclicked = {MegreSort}
+            QuickSortclicked = {QuickSort}
             />
             <div className="container">
-                {array.map((value,index)=>(
+                {array.map((diffvalue,index)=>(
                 <div className="bar" key={index}
                 style={
-                    {width:`${(this.totalWidth-600)/this.state.value}px`, height:`${value}px`,backgroundColor:this.primarycolor}
+                    {width:`${(totalWidth)/value}%`, height:`${diffvalue}%`,backgroundColor:primarycolor}
                 }></div>
                 ))}
             </div>
         </div>
         
     )
-}
 }
 
 export default SortBuilder;

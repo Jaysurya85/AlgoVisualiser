@@ -34,7 +34,7 @@ const InsertionSortAnimation = (array,animationSpeed,primarycolor,secondarycolor
         else{
           setTimeout(() => {
             const barOneStyle = bars[barOneIdx].style;
-            barOneStyle.height = `${newHeight}px`;
+            barOneStyle.height = `${newHeight}%`;
           },i*animationSpeed);
         }
       }
