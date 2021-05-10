@@ -1,0 +1,22 @@
+.box{
+    border: 1px solid white;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.set{
+    background-color: white;
+}
+.start{
+    background-color: hsl(135, 66%, 55%);
+}
+.end{
+    background-color: hsl(0, 66%, 55%);
+}
+.path{
+    background-color: hsl(66, 66%, 55%);
+}
+.search{
+    background-color: hsl(234, 66%, 55%);
+}

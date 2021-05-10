@@ -5,6 +5,7 @@
 .nav{
     width: 90%;
     /* position: fixed; */;
+    min-width: 1500px;
     height: 7%;
     top: 0;
     display: flex;
