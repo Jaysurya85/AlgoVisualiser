@@ -5,7 +5,11 @@ const Node = (props)=>{
     let color = props.path?"path":props.search?"search":props.start?"start":props.end?"end":props.visited? "set":"";
     
     return (
-        <div className={color+ " box "} onMouseDown={props.boxClicked} onMouseEnter={props.boxEntered} onMouseUp={props.boxUnclicked}>
+        <div 
+            className={color+ " box "} 
+            onMouseDown={props.boxClicked} 
+            onMouseEnter={props.boxEntered} 
+            onMouseUp={props.boxUnclicked}>
 
         </div>
     )
