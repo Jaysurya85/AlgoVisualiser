@@ -13,16 +13,17 @@ const PathFinderBuilder=()=>{
     let [mouseUp,setMouseUp] = useState(true);
     let [animationSpeed,setAnimationSpeed] = useState("10");
     let [disableButton,setDisableButton] = useState(false);
-    let sourcex = 10;
-    let sourcey = 10;
-    let destinationx =  10;
-    let destinationy =30;
+    let [sourceClicked, setSourceClicked] = useState(false);
+    let [destinationClicked,setDestinationClicked] = useState(false);
+    let[source,setSource] = useState({row:10,col:10});
+    let [destination,setDestination] = useState({row:10,col:40});
+    let [reset,setReset] = useState(false);
     useEffect(()=>{
         resetBoard();
 
     },[])
 
-    const resetBoard=()=>{
+    useEffect(()=>{
         let array = [];
         for(let i =0;i<gridHeight;i++){
             let column = [];
@@ -31,8 +32,8 @@ const PathFinderBuilder=()=>{
                     row:i,
                     column:j,
                     isVisited:false,
-                    isStart: i===sourcex && j===sourcey,
-                    isEnd: i===destinationx && j===destinationy,
+                    isStart: i===source.row && j===source.col,
+                    isEnd: i===destination.row && j===destination.col,
                     isSearched: false,
                     isPath: false,
                 });
@@ -40,9 +41,87 @@ const PathFinderBuilder=()=>{
             array.push(column);
         }
         setGrid(array);
-    }
+        setReset(false);
+    },[reset]);
 
+    const resetBoard=()=>{
+        setSource({row:10,col:10})
+        setDestination({row:10,col:40});
+        setReset(true);
+        
+    }
+    const startOrEndClicked=(row,column)=>{
+        if(destinationClicked){
+            if(row===source.row && column===source.col){
+                return;
+            }
+            let array = grid.slice();
+            let currentNode = array[destination.row][destination.col];
+            let newNode = {
+                ...currentNode,
+                isEnd: false,
+                isVisited: false,
+            }
+            array[destination.row][destination.col] = newNode;
+            // make the new start node
+            setDestination({row:row,col:column});
+            let array1 = grid.slice();
+            let currentNode1 = array1[row][column];
+            let newNode1 = {
+                ...currentNode1,
+                isEnd: true,
+                isVisited: false,
+            }
+            array1[row][column] = newNode1;
+
+            setGrid(array);
+            setGrid(array1);
+            setDestinationClicked(false);
+        }
+        else if(row===destination.row && column===destination.col){
+            if(sourceClicked){
+                return;
+            }
+            setDestinationClicked(true);
+        }
+        else if(sourceClicked){
+            //first make the previous source false
+            // if(row===destination.row && column===destination.col){
+            //     return;
+            // }
+            let array = grid.slice();
+            let currentNode = array[source.row][source.col];
+            let newNode = {
+                ...currentNode,
+                isStart: false,
+                isVisited: false,
+            }
+            array[source.row][source.col] = newNode;
+            // make the new start node
+            setSource({row:row,col:column});
+            let array1 = grid.slice();
+            let currentNode1 = array1[row][column];
+            let newNode1 = {
+                ...currentNode1,
+                isStart: true,
+                isVisited:false,
+            }
+            array1[row][column] = newNode1;
+
+            setGrid(array);
+            setGrid(array1);
+            setSourceClicked(false);
+        }
+        else{
+            if(row===source.row && column===source.col){
+                setSourceClicked(true);
+            }
+        }
+    }
     const boxClicked = (row,column)=>{
+        if(row===destination.row && column==destination.col){
+            return;
+        }
         let array = grid.slice();
         let currentNode = array[row][column];
         let newNode = {
@@ -55,8 +134,11 @@ const PathFinderBuilder=()=>{
     }
 
     const boxEntered = (row,column)=>{
-        if(mouseUp)return;
-        else boxClicked(row,column);
+        if(mouseUp){
+            return ;
+        }
+        boxClicked(row,column);
+        
     }
 
     const boxUnclicked = ()=>{
@@ -103,7 +185,9 @@ const PathFinderBuilder=()=>{
     }
 
     const bfsClicked=()=>{
-        let [animations, path] = Bfs(grid,sourcex,sourcey,destinationx,destinationy,gridHeight,gridWidth);
+        console.log(source);
+        console.log(destination);
+        let [animations, path] = Bfs(grid,source,destination,gridHeight,gridWidth);
         buttonClicked(animations,path);
     }
 
@@ -131,6 +215,7 @@ const PathFinderBuilder=()=>{
                         end={columnValue.isEnd}
                         search={columnValue.isSearched}
                         path={columnValue.isPath}
+                        startOrEndClicked ={()=>startOrEndClicked(columnValue.row,columnValue.column)}
                         boxClicked={()=>boxClicked(columnValue.row,columnValue.column)} 
                         boxEntered={()=>boxEntered(columnValue.row,columnValue.column)} 
                         boxUnclicked={boxUnclicked}/>

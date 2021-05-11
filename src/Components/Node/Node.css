@@ -3,6 +3,9 @@
     width: 25px;
     height: 25px;
     cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
 }
 
 .set{

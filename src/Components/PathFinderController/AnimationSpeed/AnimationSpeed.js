@@ -6,10 +6,10 @@ const AnimationSpeed = (props)=>{
         <select className="animation-speed" 
         disabled={props.disabled}
         value={props.initual} onChange={props.changed} >
-            <option value="1000">very slow</option>
+            <option value="100">very slow</option>
             <option value="10">slow</option>
-            <option value="1">average</option>
-            <option value="0.5">fast</option>
+            <option value="5">average</option>
+            <option value="2">fast</option>
             
         </select>
     )
