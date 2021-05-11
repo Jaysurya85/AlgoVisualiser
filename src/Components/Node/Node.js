@@ -17,6 +17,7 @@ const Node = (props)=>{
             onMouseDown={props.boxClicked} 
             onMouseEnter={props.boxEntered} 
             onMouseUp={props.boxUnclicked}>
+                {innerText}
         </div>
     )
 }
