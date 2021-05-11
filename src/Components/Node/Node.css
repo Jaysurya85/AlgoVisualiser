@@ -15,8 +15,56 @@
     background-color: hsl(0, 66%, 55%);
 }
 .path{
-    background-color: hsl(66, 66%, 55%);
+    animation-name: pathAnimation;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
 }
 .search{
-    background-color: hsl(234, 66%, 55%);
+    animation-name: visitedAnimation;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
 }
+
+@keyframes pathAnimation {
+    0% {
+        transform: scale(0.3);
+        background-color: hsl(24, 66%, 53%);
+        border-radius: 100%;
+    }
+    
+    50% {
+        background-color: hsl(41, 66%, 53%);
+    }
+    100% {
+        transform: scale(1);
+        background-color:hsl(64, 66%, 53%)
+    }
+    
+}
+ 
+@keyframes visitedAnimation {
+    0% {
+        transform: scale(0.3);
+        background-color:hsl(133, 61%, 50%);
+        border-radius: 100%;
+    }
+    
+    50% {
+        background-color: hsl(160, 61%, 50%);
+    }
+    100% {
+        transform: scale(1);
+        background-color: hsl(212, 61%, 50%);
+    }
+    
+} 

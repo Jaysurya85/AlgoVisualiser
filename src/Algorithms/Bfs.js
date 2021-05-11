@@ -4,7 +4,7 @@ const Bfs = (grid,sx,sy,dx,dy,row,col)=>{
     let [ans,animations] = HelperFunction(grid,sx,sy,dx,dy,row,col,pred,dist);
     // console.log(ans);
     // console.log(pred);
-    if(!ans)return [];
+    if(!ans)return [[],[]];
     let path = [];
     let temp = {row:dx,col:dy};
     path.push(temp);

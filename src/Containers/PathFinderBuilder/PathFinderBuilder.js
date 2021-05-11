@@ -2,17 +2,27 @@ import React, {useState, useEffect} from 'react';
 import './PathFinderBuilder.css';
 import Node from "../../Components/Node/Node";
 import Bfs from "../../Algorithms/Bfs";
+import PathFinderController from '../../Components/PathFinderController/PathFinderController';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PathFinderBuilder=()=>{
     const gridWidth = 56;
-    const gridHeight = 23;
+    const gridHeight = 20;
     let [grid,setGrid] = useState([]);
     let [mouseUp,setMouseUp] = useState(true);
+    let [animationSpeed,setAnimationSpeed] = useState("10");
+    let [disableButton,setDisableButton] = useState(false);
     let sourcex = 10;
     let sourcey = 10;
     let destinationx =  10;
-    let destinationy =40;
+    let destinationy =30;
     useEffect(()=>{
+        resetBoard();
+
+    },[])
+
+    const resetBoard=()=>{
         let array = [];
         for(let i =0;i<gridHeight;i++){
             let column = [];
@@ -30,8 +40,7 @@ const PathFinderBuilder=()=>{
             array.push(column);
         }
         setGrid(array);
-
-    },[])
+    }
 
     const boxClicked = (row,column)=>{
         let array = grid.slice();
@@ -53,14 +62,22 @@ const PathFinderBuilder=()=>{
     const boxUnclicked = ()=>{
         setMouseUp(true);
     }
-    async function buttonClicked(){
-        let [animations, path] = Bfs(grid,sourcex,sourcey,destinationx,destinationy,gridHeight,gridWidth);
+    async function buttonClicked(animations,path){
+        if(animations.length==0){
+            console.log("reached to the toast");
+            toast("There is no Path from Source To Destination!",{});
+            resetBoard();
+        }
+        else{
+            let sleep = (ms)=>{
+                return new Promise(resolve=>{
+                    setTimeout(resolve,ms);
+                })
+            }
+            setDisableButton(true);
             for(let i =0;i<animations.length;i++){
-                setTimeout(()=>{
-                    let temp = animations[i];
-                    // const boxs = document.getElementsByClassName('box');
-                    // boxs[temp.row][temp.col].style.backgroundColor = "blue";
-                    // console.log(temp);
+                await(sleep(animationSpeed));
+                let temp = animations[i];
                     let array = grid.slice();
                     let newNode = {
                         ...temp,
@@ -68,16 +85,10 @@ const PathFinderBuilder=()=>{
                     }
                     array[temp.row][temp.col] = newNode;
                     setGrid(array);
-                },i*10);
             }
-        
-        const delay = animations.length*10;
-        for(let i=0;i<path.length;i++){
-            setTimeout(()=>{
+            for(let i=0;i<path.length;i++){
+                await(sleep(animationSpeed));
                 let temp = path[i];
-                // const boxs = document.getElementsByClassName('box');
-                // boxs[temp.row][temp.col].style.backgroundColor = "blue";
-                // console.log(temp);
                 let array = grid.slice();
                 let newNode = {
                     ...temp,
@@ -85,13 +96,32 @@ const PathFinderBuilder=()=>{
                 }
                 array[temp.row][temp.col] = newNode;
                 setGrid(array);
-            },(delay+i*25));
+            }
+            setDisableButton(false);
         }
+        
+    }
+
+    const bfsClicked=()=>{
+        let [animations, path] = Bfs(grid,sourcex,sourcey,destinationx,destinationy,gridHeight,gridWidth);
+        buttonClicked(animations,path);
+    }
+
+    const AnimationSpeedChanged=(event)=>{
+        let newSpeed = event.target.value;
+        console.log(newSpeed);
+        setAnimationSpeed(newSpeed);
     }
 
     return (
         <div className="main-container">
-            <button onClick={buttonClicked}>press Me</button>
+            <PathFinderController
+                bfsClicked={bfsClicked} 
+                resetBoard={resetBoard} 
+                initual={animationSpeed}
+                disableButton = {disableButton}
+                changed = {AnimationSpeedChanged}
+                />
             <div className = "grid">
                 {grid.map((rowValue,rowIndex)=>(
                     rowValue.map((columnValue,columnIndex)=>(

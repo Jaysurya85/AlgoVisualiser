@@ -1,0 +1,52 @@
+.controller-container{
+    width: 70%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 0% 5%;
+    margin-bottom: 2%;
+}
+
+.nav-animations{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.nav-text{
+    color: white;
+}
+
+.path-reset{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+.path-reset , .path-algo{
+    margin: 16px 10px;
+    /* background-color: rgb(27, 90, 64); */
+    background-color: transparent;
+    color: white;
+    outline: none;
+    overflow: hidden;
+    border: 0;
+    font-size: 18px;
+}
+.path-reset:hover,.path-algo:hover{
+    background-color: white;
+    color: rgb(27, 90, 64);
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.path-reset:disabled, .path-algo:disabled{
+    background-color: gray;
+    color: darkgray;
+    cursor: not-allowed;
+    border-radius: 25px;
+}
