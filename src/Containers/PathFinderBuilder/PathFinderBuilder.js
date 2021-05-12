@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './PathFinderBuilder.css';
 import Node from "../../Components/Node/Node";
 import Bfs from "../../Algorithms/Bfs";
+import Dfs from "../../Algorithms/Dfs";
 import PathFinderController from '../../Components/PathFinderController/PathFinderController';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -119,7 +120,7 @@ const PathFinderBuilder=()=>{
         }
     }
     const boxClicked = (row,column)=>{
-        if(row===destination.row && column==destination.col){
+        if(row===destination.row && column===destination.col){
             return;
         }
         let array = grid.slice();
@@ -145,7 +146,7 @@ const PathFinderBuilder=()=>{
         setMouseUp(true);
     }
     async function buttonClicked(animations,path){
-        if(animations.length==0){
+        if(animations.length===0){
             console.log("reached to the toast");
             toast("There is no Path from Source To Destination!",{});
             resetBoard();
@@ -158,7 +159,7 @@ const PathFinderBuilder=()=>{
             }
             setDisableButton(true);
             for(let i =0;i<animations.length;i++){
-                await(sleep(animationSpeed));
+                await sleep(animationSpeed);
                 let temp = animations[i];
                     let array = grid.slice();
                     let newNode = {
@@ -169,7 +170,7 @@ const PathFinderBuilder=()=>{
                     setGrid(array);
             }
             for(let i=0;i<path.length;i++){
-                await(sleep(animationSpeed));
+                await sleep(animationSpeed);
                 let temp = path[i];
                 let array = grid.slice();
                 let newNode = {
@@ -185,9 +186,14 @@ const PathFinderBuilder=()=>{
     }
 
     const bfsClicked=()=>{
-        console.log(source);
-        console.log(destination);
+        // console.log(source);
+        // console.log(destination);
         let [animations, path] = Bfs(grid,source,destination,gridHeight,gridWidth);
+        buttonClicked(animations,path);
+    }
+
+    const dfsClicked=()=>{
+        let [animations,path] = Dfs(grid,source,destination,gridHeight,gridWidth);
         buttonClicked(animations,path);
     }
 
@@ -200,7 +206,8 @@ const PathFinderBuilder=()=>{
     return (
         <div className="main-container">
             <PathFinderController
-                bfsClicked={bfsClicked} 
+                bfsClicked={bfsClicked}
+                dfsClicked={dfsClicked} 
                 resetBoard={resetBoard} 
                 initual={animationSpeed}
                 disableButton = {disableButton}

@@ -1,4 +1,4 @@
-const Bfs = (grid,s,d,row,col)=>{
+const Dfs = (grid,s,d,row,col)=>{
     let pred = [];
     let dist = [];
     // console.log(s);
@@ -47,8 +47,7 @@ function HelperFunction(grid,s,d,row,col,pred,dist){
 
     // bfs algo
     while(queue.length>0){
-        let temp1 = queue.splice(0,1);
-        let temp = temp1[0];
+        let temp = queue.pop();
         let x = temp.row;
         let y = temp.col;
         // up
@@ -60,17 +59,18 @@ function HelperFunction(grid,s,d,row,col,pred,dist){
             queue.push({row:x-1,col:y});
             if(x-1===d.row && d.col===y)return [true,animations];
         }
-        //left
-        if(y>0 && !visited[x][y-1]){
-            visited[x][y-1] = true;
-            dist[x][y-1]  = dist[x][y]+1;
-            pred[x][y-1] =  temp;
-            animations.push({row:x,col:y-1});
-            queue.push({row:x,col:y-1});
-            if(x===d.row && d.col===y-1)return [true,animations];
+        // right
+        else if(y<col-1 && !visited[x][y+1]){
+            visited[x][y+1] = true;
+            dist[x][y+1]  = dist[x][y]+1;
+            pred[x][y+1] =  temp;
+            animations.push({row:x,col:y+1});
+            queue.push({row:x,col:y+1});
+            if(x===d.row && d.col===y+1)return [true,animations];
         }
+        
         // down
-        if(x<row-1 && !visited[x+1][y]){
+        else if(x<row-1 && !visited[x+1][y]){
             visited[x+1][y] = true;
             dist[x+1][y]  = dist[x][y]+1;
             pred[x+1][y] =  temp;
@@ -79,17 +79,18 @@ function HelperFunction(grid,s,d,row,col,pred,dist){
             if(x+1===d.row && d.col===y)return [true,animations];
         }
         
-        // right
-        if(y<col-1 && !visited[x][y+1]){
-            visited[x][y+1] = true;
-            dist[x][y+1]  = dist[x][y]+1;
-            pred[x][y+1] =  temp;
-            animations.push({row:x,col:y+1});
-            queue.push({row:x,col:y+1});
-            if(x===d.row && d.col===y+1)return [true,animations];
+        
+        //left
+        else if(y>0 && !visited[x][y-1]){
+            visited[x][y-1] = true;
+            dist[x][y-1]  = dist[x][y]+1;
+            pred[x][y-1] =  temp;
+            animations.push({row:x,col:y-1});
+            queue.push({row:x,col:y-1});
+            if(x===d.row && d.col===y-1)return [true,animations];
         }
     }
     return [false,animations];
 }
 
-export default Bfs;
+export default Dfs;

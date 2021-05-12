@@ -11,7 +11,7 @@ const PathFinderController=(props)=>{
             </div>
             <div className="nav-algo">
                 <button className="path-algo" disabled={props.disableButton} onClick={props.bfsClicked}>Breadth First Search</button>
-                <button className="path-algo" disabled={props.disableButton} onClick={props.bfsClicked}>Depth First Search</button>
+                <button className="path-algo" disabled={props.disableButton} onClick={props.dfsClicked}>Depth First Search</button>
             </div>
 
         </div>  
