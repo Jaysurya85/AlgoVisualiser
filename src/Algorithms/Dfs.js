@@ -60,7 +60,7 @@ function HelperFunction(grid,s,d,row,col,pred,dist){
             if(x-1===d.row && d.col===y)return [true,animations];
         }
         // right
-        else if(y<col-1 && !visited[x][y+1]){
+        if(y<col-1 && !visited[x][y+1]){
             visited[x][y+1] = true;
             dist[x][y+1]  = dist[x][y]+1;
             pred[x][y+1] =  temp;
@@ -70,7 +70,7 @@ function HelperFunction(grid,s,d,row,col,pred,dist){
         }
         
         // down
-        else if(x<row-1 && !visited[x+1][y]){
+        if(x<row-1 && !visited[x+1][y]){
             visited[x+1][y] = true;
             dist[x+1][y]  = dist[x][y]+1;
             pred[x+1][y] =  temp;
@@ -81,7 +81,7 @@ function HelperFunction(grid,s,d,row,col,pred,dist){
         
         
         //left
-        else if(y>0 && !visited[x][y-1]){
+        if(y>0 && !visited[x][y-1]){
             visited[x][y-1] = true;
             dist[x][y-1]  = dist[x][y]+1;
             pred[x][y-1] =  temp;

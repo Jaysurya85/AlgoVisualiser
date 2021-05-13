@@ -6,6 +6,7 @@ import Dfs from "../../Algorithms/Dfs";
 import PathFinderController from '../../Components/PathFinderController/PathFinderController';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Dijkstras from '../../Algorithms/Dijkstras';
 
 const PathFinderBuilder=()=>{
     const gridWidth = 56;
@@ -19,6 +20,7 @@ const PathFinderBuilder=()=>{
     let[source,setSource] = useState({row:10,col:10});
     let [destination,setDestination] = useState({row:10,col:40});
     let [reset,setReset] = useState(false);
+    let [weight,setWeight] = useState(false);
     useEffect(()=>{
         resetBoard();
 
@@ -37,6 +39,10 @@ const PathFinderBuilder=()=>{
                     isEnd: i===destination.row && j===destination.col,
                     isSearched: false,
                     isPath: false,
+                    isWeight:false,
+                    distance: Infinity,
+                    weight: 1,
+                    previousNode: null,
                 });
             }
             array.push(column);
@@ -125,13 +131,28 @@ const PathFinderBuilder=()=>{
         }
         let array = grid.slice();
         let currentNode = array[row][column];
-        let newNode = {
-            ...currentNode,
-            isVisited: !currentNode.isVisited,
+        if(weight){
+            let newNode = {
+                ...currentNode,
+                isWeight: !currentNode.isWeight,
+                isVisited:false,
+            }
+            array[row][column] = newNode;
+            setGrid(array);
+            setMouseUp(false);
         }
-        array[row][column] = newNode;
-        setGrid(array);
-        setMouseUp(false);
+        else{
+            let newNode = {
+                ...currentNode,
+                isVisited: !currentNode.isVisited,
+                isWeight:false,
+            }
+            array[row][column] = newNode;
+            setGrid(array);
+            setMouseUp(false);
+        }
+        
+       
     }
 
     const boxEntered = (row,column)=>{
@@ -146,6 +167,8 @@ const PathFinderBuilder=()=>{
         setMouseUp(true);
     }
     async function buttonClicked(animations,path){
+        // console.log(animations);
+        // console.log(path);
         if(animations.length===0){
             console.log("reached to the toast");
             toast("There is no Path from Source To Destination!",{});
@@ -162,8 +185,9 @@ const PathFinderBuilder=()=>{
                 await sleep(animationSpeed);
                 let temp = animations[i];
                     let array = grid.slice();
+                    let currentNode = array[temp.row][temp.col];
                     let newNode = {
-                        ...temp,
+                        ...currentNode,
                         isSearched: true,
                     }
                     array[temp.row][temp.col] = newNode;
@@ -173,8 +197,9 @@ const PathFinderBuilder=()=>{
                 await sleep(animationSpeed);
                 let temp = path[i];
                 let array = grid.slice();
+                let currentNode = array[temp.row][temp.col];
                 let newNode = {
-                    ...temp,
+                    ...array,
                     isPath: true,
                 }
                 array[temp.row][temp.col] = newNode;
@@ -184,6 +209,7 @@ const PathFinderBuilder=()=>{
         }
         
     }
+
 
     const bfsClicked=()=>{
         // console.log(source);
@@ -197,10 +223,24 @@ const PathFinderBuilder=()=>{
         buttonClicked(animations,path);
     }
 
+    const dijkstrasClicked=()=>{
+        let startNode = grid[source.row][source.col];
+        let finishNode = grid[destination.row][destination.col];
+        let [animations,path] = Dijkstras(grid,startNode,finishNode);
+        buttonClicked(animations,path);
+        // console.log(animations);
+        // console.log(path);
+        // console.log(grid);
+    }
+
     const AnimationSpeedChanged=(event)=>{
         let newSpeed = event.target.value;
-        console.log(newSpeed);
+        // console.log(newSpeed);
         setAnimationSpeed(newSpeed);
+    }
+
+    const AddWeight=()=>{
+        setWeight(!weight);
     }
 
     return (
@@ -208,7 +248,9 @@ const PathFinderBuilder=()=>{
             <PathFinderController
                 bfsClicked={bfsClicked}
                 dfsClicked={dfsClicked} 
-                resetBoard={resetBoard} 
+                dijkstrasClicked = {dijkstrasClicked}
+                resetBoard={resetBoard}
+                addWeight = {AddWeight} 
                 initual={animationSpeed}
                 disableButton = {disableButton}
                 changed = {AnimationSpeedChanged}
@@ -222,6 +264,7 @@ const PathFinderBuilder=()=>{
                         end={columnValue.isEnd}
                         search={columnValue.isSearched}
                         path={columnValue.isPath}
+                        weight={columnValue.isWeight}
                         startOrEndClicked ={()=>startOrEndClicked(columnValue.row,columnValue.column)}
                         boxClicked={()=>boxClicked(columnValue.row,columnValue.column)} 
                         boxEntered={()=>boxEntered(columnValue.row,columnValue.column)} 

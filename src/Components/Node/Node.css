@@ -6,6 +6,7 @@
     font-size: 20px;
     text-align: center;
     font-weight: bold;
+    color: black;
 }
 
 .set{
@@ -16,6 +17,9 @@
 }
 .end{
     background-color: hsl(0, 66%, 55%);
+}
+.weight{
+    background-color: hsl(332, 44%, 80%);
 }
 .path{
     animation-name: pathAnimation;
