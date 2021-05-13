@@ -5,15 +5,18 @@
 .heading {
   width: 100%;
   height: 15%;
-  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdh73X_adgidBpAjDhbyNNhNsKPfAEKmmz4A&usqp=CAU");
+  background-color: rgb(59, 167, 113);
+  /* background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdh73X_adgidBpAjDhbyNNhNsKPfAEKmmz4A&usqp=CAU"); */
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
+  
 }
 .main-heading {
   font-size: 40px;
   font-weight: 700;
   color: white;
   white-space: nowrap;
+  text-decoration: none;
 }

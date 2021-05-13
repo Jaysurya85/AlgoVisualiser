@@ -9,12 +9,12 @@ const MainBuilder=()=>{
         <BrowserRouter>
         <div className="main-container">
             <div className = "heading">  
-                <Link to="/">
+                <Link to="/" style={{textDecoration:'none'}}>
                     <p className="main-heading">Sorting Visualizer</p>
                 </Link> 
-                <Link to = "/PathFinder">
+                <Link to = "/PathFinder" style={{textDecoration:'none'}}>
                     <p className="main-heading">Path Finding Visualizer</p>
-                </Link> 
+                </Link>
             </div>
             <Switch>
                 <Route path="/" exact component={SortBuilder}/>

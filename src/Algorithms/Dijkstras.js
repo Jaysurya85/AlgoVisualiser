@@ -10,8 +10,8 @@ const Dijkstras=(grid,startNode,finishNode)=>{
         while(current!=null){
             path.push({row:current.row,col:current.column});
             current = current.previousNode;
-
         }
+        path.reverse();
         return [animations,path];
     }
 }

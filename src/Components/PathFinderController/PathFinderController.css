@@ -22,12 +22,6 @@
 }
 
 .path-reset{
-    font-size: 20px;
-    font-weight: bold;
-}
-
-
-.path-reset , .path-algo{
     margin: 16px 10px;
     /* background-color: rgb(27, 90, 64); */
     background-color: transparent;
@@ -35,7 +29,22 @@
     outline: none;
     overflow: hidden;
     border: 0;
-    font-size: 18px;
+    font-size: 25px;
+    font-weight: 700;
+    font-family: 'Quicksand';
+}
+
+.path-algo{
+    margin: 16px 10px;
+    /* background-color: rgb(27, 90, 64); */
+    background-color: transparent;
+    color: white;
+    outline: none;
+    overflow: hidden;
+    border: 0;
+    font-size: 20px;
+    font-weight:500;
+    font-family: 'Quicksand';
 }
 .path-reset:hover,.path-algo:hover{
     background-color: white;
@@ -50,3 +59,4 @@
     cursor: not-allowed;
     border-radius: 25px;
 }
+
