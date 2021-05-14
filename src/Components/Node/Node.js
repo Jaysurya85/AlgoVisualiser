@@ -6,14 +6,14 @@ const Node = (props)=>{
     let innerText = "";
     if(props.start){
         innerText=<svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        width="1em" 
-                        height="1em" 
-                        viewBox="0 0 16 16"><g fill="black">
-                            <path 
-                            d="M4.25 3l1.166-.624l8 5.333v1.248l-8 5.334l-1.166-.624V3zm1.5 1.401v7.864l5.898-3.932L5.75 4.401z"/>
-                            </g>
-                </svg>;
+        xmlns="http://www.w3.org/2000/svg" 
+        width="1em" 
+        height="1em" 
+        viewBox="0 0 16 16"><g fill="black">
+            <path 
+            d="M4.25 3l1.166-.624l8 5.333v1.248l-8 5.334l-1.166-.624V3zm1.5 1.401v7.864l5.898-3.932L5.75 4.401z"/>
+            </g>
+</svg>;
     }
     if(props.end){
         innerText =<svg 

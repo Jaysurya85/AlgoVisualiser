@@ -7,18 +7,19 @@ import PathFinderController from '../../Components/PathFinderController/PathFind
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Dijkstras from '../../Algorithms/Dijkstras';
+import PathDescription from '../../Components/PathDescription/PathDescription';
 
 const PathFinderBuilder=()=>{
-    const gridWidth = 56;
-    const gridHeight = 20;
+    const gridWidth = 39;
+    const gridHeight = 25;
     let [grid,setGrid] = useState([]);
     let [mouseUp,setMouseUp] = useState(true);
     let [animationSpeed,setAnimationSpeed] = useState("10");
     let [disableButton,setDisableButton] = useState(false);
     let [sourceClicked, setSourceClicked] = useState(false);
     let [destinationClicked,setDestinationClicked] = useState(false);
-    let[source,setSource] = useState({row:10,col:10});
-    let [destination,setDestination] = useState({row:10,col:40});
+    let[source,setSource] = useState({row:10,col:5});
+    let [destination,setDestination] = useState({row:10,col:30});
     let [reset,setReset] = useState(false);
     let [weight,setWeight] = useState(false);
     useEffect(()=>{
@@ -244,7 +245,7 @@ const PathFinderBuilder=()=>{
     }
 
     return (
-        <div className="main-container">
+        <div className="path-main-container">
             <PathFinderController
                 bfsClicked={bfsClicked}
                 dfsClicked={dfsClicked} 
@@ -254,25 +255,29 @@ const PathFinderBuilder=()=>{
                 initual={animationSpeed}
                 disableButton = {disableButton}
                 changed = {AnimationSpeedChanged}
-                />
-            <div className = "grid">
-                {grid.map((rowValue,rowIndex)=>(
-                    rowValue.map((columnValue,columnIndex)=>(
-                        <Node 
-                        visited={columnValue.isVisited} 
-                        start={columnValue.isStart}
-                        end={columnValue.isEnd}
-                        search={columnValue.isSearched}
-                        path={columnValue.isPath}
-                        weight={columnValue.isWeight}
-                        startOrEndClicked ={()=>startOrEndClicked(columnValue.row,columnValue.column)}
-                        boxClicked={()=>boxClicked(columnValue.row,columnValue.column)} 
-                        boxEntered={()=>boxEntered(columnValue.row,columnValue.column)} 
-                        boxUnclicked={boxUnclicked}/>
-                    ))
-                ))}
-                
+            />
+            <div className="bottom-container">
+                <div className = "grid">
+                    {grid.map((rowValue,rowIndex)=>(
+                        rowValue.map((columnValue,columnIndex)=>(
+                            <Node 
+                            visited={columnValue.isVisited} 
+                            start={columnValue.isStart}
+                            end={columnValue.isEnd}
+                            search={columnValue.isSearched}
+                            path={columnValue.isPath}
+                            weight={columnValue.isWeight}
+                            startOrEndClicked ={()=>startOrEndClicked(columnValue.row,columnValue.column)}
+                            boxClicked={()=>boxClicked(columnValue.row,columnValue.column)} 
+                            boxEntered={()=>boxEntered(columnValue.row,columnValue.column)} 
+                            boxUnclicked={boxUnclicked}/>
+                        ))
+                    ))}
+                    
+                </div>
+                <PathDescription />
             </div>
+            
             
         </div>
     )
