@@ -53,8 +53,8 @@ const PathFinderBuilder=()=>{
     },[reset]);
 
     const resetBoard=()=>{
-        setSource({row:10,col:10})
-        setDestination({row:10,col:40});
+        setSource({row:10,col:5})
+        setDestination({row:10,col:30});
         setReset(true);
         
     }
